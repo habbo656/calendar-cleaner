@@ -1,0 +1,28 @@
+name: Auto-merge
+
+# Enables GitHub auto-merge for PRs labelled `automerge` (agent PRs) and for
+# Dependabot patch/minor updates. GitHub merges them once all required checks pass.
+on:
+  pull_request_target:
+    types: [opened, labeled, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - id: meta
+        if: github.actor == 'dependabot[bot]'
+        uses: dependabot/fetch-metadata@v3
+      - name: Enable auto-merge
+        if: |
+          contains(github.event.pull_request.labels.*.name, 'automerge') ||
+          (github.actor == 'dependabot[bot]' && steps.meta.outputs.update-type != 'version-update:semver-major')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR"

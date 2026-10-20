@@ -1,0 +1,6 @@
+# Owner gate: changes to these paths need an owner review even when auto-merge is on.
+# Everything else merges autonomously once CI + Claude review pass.
+/.github/                 @habbo656
+/.claude/settings.json    @habbo656
+/src/google/auth.ts       @habbo656
+/docs/decisions/          @habbo656

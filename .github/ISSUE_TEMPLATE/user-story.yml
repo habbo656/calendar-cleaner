@@ -1,0 +1,24 @@
+name: User story
+description: A feature request written as a user story. Label with `agent:implement` to let Claude build it.
+labels: [user-story]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      placeholder: As a <user> I want <capability> so that <benefit>.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Concrete, testable. Each becomes a unit or e2e test.
+      placeholder: |
+        - Given … when … then …
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / out of scope
